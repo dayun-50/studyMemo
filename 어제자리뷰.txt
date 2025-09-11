@@ -1,0 +1,36 @@
+* Review
+
+1. IOC 와 DL/DI
+ - DI 기법 두가지
+   > XML 방식 : Setter 주입과 생성자 주입 방식으로 수행
+   > Annotation 방식 : @Component 를 대상으로 한 Component-Scan
+                               시점에 @Autowired 
+
+2. Spring 프로젝트에서 Tomcat 의 부팅 과정
+
+3. 어노테이션 방식의 인스턴스 생성 및 DI
+
+4. Maven 활용 라이브러리 추가
+
+5. @Controller 의 return 값의 의미 , forward 와 redirect
+
+
+
+jdbc.queryForObj(sql, ?) <하나의 객체만  리턴 (리스트외에사용할때 이거스면됨)
+
+요것도 하나의 객체 그니까 내가원하는 한사람의 정보만 출력
+public MessagesDTO selectAll(int seq) {
+	String sql = "select * from messages where seq = ?";
+		
+	return jdbc.query(sql, new RowMapper<MessagesDTO>() { //익명 클레스방식
+		@Override
+		public MessagesDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			MessagesDTO dto = new MessagesDTO();
+			dto.setSeq(rs.getInt("seq"));
+			dto.setSender(rs.getString("sender"));
+			dto.setMessage(rs.getString("message"));
+			return dto;
+		}
+	}, seq);
+}
+
