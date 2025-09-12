@@ -1,0 +1,16 @@
+뭐 복습이래 >
+* IOC - Dl/ DL
+* @Controller 와 Component-scan
+* @Controller 와 @RequestMapping
+* @RequestMapping 된 메서드의 파라미터와 리턴값 ( forward/redirect )
+* Maven 으로 라이브러리 추가하기
+
+
+복습 >
+* Spring JDBC
+* CRUD 구현 및 실습
+* ExceptionHandler
+
+
+오늘>
+* 멤버십 회원가입 기능 숙제 검사
