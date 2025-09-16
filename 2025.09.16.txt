@@ -1,0 +1,30 @@
+* MyBatis ( Persistence Framework ) <-- IBatis
+- 자바 소스코드와 SQL 쿼리의 분리 (XML로 분리) -> DBA 와 협업이 용이
+- SQL 쿼리 변동 시 , 프로젝트 재컴파일이 필요 없음
+- 동적 쿼리 (복잡한 쿼리) 제작에 유리
+
+
+insert into messages values(messages_seq.nextval, #{sender}, #{message})
+#{} 은 문자열로 들어오고 내가 먹여놓은 그런거 ㅇㅇ
+
+근데 ${} 로하면 내가적는 그대로 들어간데
+#{sender} = dto.getSender 의 값
+select * from messages where ${column} = #{keyword}
+여기서 ${column} 는 '' 로 안감싸는 쿼리문장이라 $로 들어감
+
+그리고 '%'||#{keyword}||'%' ->'%keyword값%' 라는뜻으로 ||로 연결하고 %는 싱글 쿼테이션으로 한번 묶어줘야한데
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
