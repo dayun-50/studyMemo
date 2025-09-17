@@ -1,0 +1,36 @@
+
+# Transaction
+
+**트랜잭션을 사용해야 하는 이유!!**
+
+1. 원자성  - 작업의 원자성
+2. 일관성 - dbms가 알아서 해줌
+3. 독립성 
+4. 지속성 - dbms가 알아서 해줌
+
+하나의 버튼, 즉 예를 들면 은행의 “송금” 버튼을 누르면 송금하는 사람의 잔액은 ”줄어들고” 송금받는 사람의 잔액은 “늘어난다.”
+
+하나의 버튼,즉 기능에 여러개의 DB가 필요할 때
+
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<property name="dataSource" ref="dataSource"/>
+</bean>
+
+<!-- @Transactional 어노테이션 활성화 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+
+* WebSocket
+- Http 프로토콜 특징 상 실시간 통신에 불리
+- Http Side로 하나의 통신 통로를 더 개설하는 기법 ( 소켓 통신 )
+- 채팅 / 주식 차트 / 온라인 멀티게임 등등에 사용
+
+프로토콜?에서 뭐 뭐시깽이 연결하는 과정을 핸드쉐이킹이라한디야
+
+
+
+
+
+
+
