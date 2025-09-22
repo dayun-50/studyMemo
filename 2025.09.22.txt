@@ -1,0 +1,64 @@
+* NodeJS
+- 웹 frontend 전용 언어였던 javascript를 브라우저 바깥에서도 사용할 수 있게 해주는 플랫폼
+-js의 JDK플렛폼 이라고 생각하면 된다~ // Java 의 JDK와 , Javascript 와 NodeJS의 관계가 유사
+- React 는 NodeJs 기반 자바스크립트에서 사용 할수 있는 framework ( Web UI )
+- React를 사용하기 위해 ECMA6 문법을 사용하며 함수형, 선언형 프로그래밍 코드가 다수 등장 할 예정
+- 동시에 아키텍처도 MVVM + 경량 Flux ( <요거 이름임 )아키텍처를 하이브리드 형태로 많이 사용
+
+====================
+https://nodejs.org/ko/download
+Windows PowerShell 관리자권한으로 실행>
+set-ExecutionPolicy RemoteSigned 엔터
+
+다음에 Y엔터
+
+vs코드에서
+ctrl+` >cmd 역할
+npx create-react-app study01 
+cmd 하듯이 폴더 들갔다 나갓다하면서 원하는 프로젝트들어가서 
+npm start > 리액트 서버켜지는거
+ctrl+c >서버 꺼짐 
+
+---------------------------------
+package.json > pom.xml 이라고 생각하면됨
+node_modules > 기본 라이브러리 폴더
+src > 코드작성위치
+public > 패킹에 안들어가는 폴더들을 넣는곳 / 패커의 범위 밖에있는 폴더 / 신경안써도된데
+
+src App.scc > 전역스타일링파일
+
+src App.js > main함수
+return 함수안에서 html코드를 짜면됨 -> 하지만 html이아니다.
+예를들면 jsp같은 친구라고 생각하면됨
+react안에서는 jsx라고 부른데
+html 8-90% 는 따라가면서 jsx의 문법이 추가된다~(ㄹㅇ 그냥jsp생각하면됨c태그같은거)
+
+jsx안에 중괄호( {} )생성시 함수콜 가능 >근데너무 함수같으니까 태그로 부를수도있음
+{Table()} 이렇게 콜하던걸 <Table></Table> // <Table/>가능
+
+
+=============================================
+* React
+- 프론트엔드 프레임워크로 현 시점 기준 SPA의 선두 주자
+- 단일 페이지로 모든 기능에 대한 View를 제공함.
+- 모든 통신이 비동기로 수행 됨. (페이지 전환이 없음)
+- ES6 기반의 고유문법으로 JQuery를 사용하지 않음
+- Bootstrap 도 직접적인 사용을 지양한다. (글루라이브러리 사용)
+- 단방향 바인딩 > 변수값이바뀌면 UI가 바뀌지만 UI가 바뀐다고 변수의 데이터값이 바뀌지않음
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
