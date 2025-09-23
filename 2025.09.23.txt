@@ -1,0 +1,5 @@
+React 특징
+- 코드 재사용성 ( Functional Component )
+- 상태변수 기반 UI 갱신
+- SPA 특징으로 인한 UX개선
+
