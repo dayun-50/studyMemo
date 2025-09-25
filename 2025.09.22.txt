@@ -19,6 +19,9 @@ cmd 하듯이 폴더 들갔다 나갓다하면서 원하는 프로젝트들어�
 npm start > 리액트 서버켜지는거
 ctrl+c >서버 꺼짐 
 
+npm install react-router-dom
+npm install zustand  
+
 ---------------------------------
 package.json > pom.xml 이라고 생각하면됨
 node_modules > 기본 라이브러리 폴더
