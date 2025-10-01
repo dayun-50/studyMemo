@@ -1,0 +1,47 @@
+* 리액트 개요
+- 상태변수
+- functional Component ( UI 재사용성 )
+- ES6 의 선언형 함수들 (map, foreach, filter, some, every ...)
+- module css -> styledcomponent -> tailwind.css
+- react router dom 
+- props -> 상태관리 라이브러리 ( redux, zustand )
+- axios + restful 
+
+* 클라이언트가 서버에 데이터를 전송하는 방식 3가지 
+1. Qurey Parameter : key =valuse&key=value 형태
+2. JSON : @RequstBody
+3. Pathvariable : @Pathvariable 로 수신 > 레스트풀에서만 쓰이는 문법이래
+
+
+
+
+
+
+
+깃 띄고 클론? 포크 the URL 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
