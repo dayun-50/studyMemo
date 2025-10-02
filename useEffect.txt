@@ -1,0 +1,25 @@
+
+  const [data, setData] = useState([]);
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("Test");
+    axios.get("http://10.5.5.9/music").then(resp => {
+      // console.log(resp);
+      setData(resp.data);
+      
+    })
+    // set Interval() 은 ex) (data,3) = 3초마다 데이터를 실행하라
+   return () => { // clean up 함수 : 컴포넌트가 언마운팅 될 때, useEffect 내에서 사용하던 자원을 정리하는 역할
+
+   };
+  },[]);  // ,[] 의존성 배열 !! 무한루프를 막아준다! 안에 값을 넣을 수 있음 ex) ,[data]
+
+  return (
+    <div className="App">
+      {data.map((item,i)=>{
+        return (<div key={i}>{item.title}</div>)
+      })}
+      <button onClick={() => { setCount(count+1); }}>카운팅</button>
+    </div>
