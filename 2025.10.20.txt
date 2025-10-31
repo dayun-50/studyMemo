@@ -1,0 +1,50 @@
+<div className={styles.phoneWrapper}>
+      <span className={styles.prefix}>010 -</span>
+      <input id="phone1" type="text" placeholder="연락처" value={phone1} onChange={hendleChangeByPhone1}/>
+      <span className={styles.dash}>-</span>
+      <input id="phone2" type="text" placeholder="연락처" value={phone2} onChange={hendleChangeByPhone2}/>
+</div>
+
+
+
+
+✅ 1️⃣ substring(start, end)
+
+👉 시작 인덱스부터 끝 인덱스 전까지의 문자열을 잘라냄.
+
+let phone = "010-1234-5678";
+let part1 = phone.substring(0, 3);  // "010"
+let part2 = phone.substring(4, 8);  // "1234"
+let part3 = phone.substring(9);     // "5678"
+
+console.log(part1, part2, part3); // 👉 010 1234 5678
+
+✅ 2️⃣ slice(start, end)
+
+👉 substring()이랑 비슷하지만, 음수 인덱스 사용 가능
+
+let str = "abcdefg";
+console.log(str.slice(2, 5)); // "cde"
+console.log(str.slice(-3));   // "efg"
+
+✅ 3️⃣ split(separator)
+
+👉 문자 기준으로 분리해서 배열로 반환
+
+let phone = "010-1234-5678";
+let parts = phone.split("-");
+console.log(parts); // ["010", "1234", "5678"]
+
+console.log(parts[1]); // "1234"
+
+✅ 4️⃣ 조합 예시
+let phone = "010-1234-5678";
+let [first, middle, last] = phone.split("-");
+console.log(`앞: ${first}, 중간: ${middle}, 끝: ${last}`);
+
+
+출력 👉
+
+앞: 010, 중간: 1234, 끝: 5678
+
+수정때 친구 보더를 지우는쪽으로 가고 샌터로 글자 맞추고 폰트상이즈 수정전사이즈로

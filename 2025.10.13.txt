@@ -1,0 +1,13 @@
+* MPA ( Multiple Page Application )
+- JSP / Thymeleaf 등...
+
+* SPA ( Single Page Application )
+- React 는 스프링 부트 서버와 별개로 독립 호스팅 된다. ( Cross Origin - 보안 이슈 발생 )
+- Restful 통신을 수행
+- Session 대신 JWT 로 인증 시스템 변경
+
+* 호스팅 관련
+- EC2 , Compute Engine -> 인증서 수동 세팅
+- 크라우드런 or Firebase https 호스팅 -> 인증서 자동 세팅
+
+ 

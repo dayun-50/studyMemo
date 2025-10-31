@@ -1,0 +1,165 @@
+mport javax.servlet.http.HttpSession;
+import javax.websocket.server.ServerEndpointConfig;
+import javax.websocket.server.HandshakeRequest;
+import javax.websocket.server.HandshakeResponse;
+
+public class WebSocketConfigurator extends ServerEndpointConfig.Configurator {
+    @Override
+    public void modifyHandshake(ServerEndpointConfig sec,
+                                HandshakeRequest request,
+                                HandshakeResponse response) {
+        HttpSession httpSession = (HttpSession) request.getHttpSession();
+        // 필요하면 httpSession에서 로그인 정보 가져와 WebSocket 세션에 넣기
+        sec.getUserProperties().put("session", httpSession);
+    }
+
+
+
+<!-- 웹소켓 라이브러리 -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-websocket</artifactId>
+</dependency>
+
+
+<dependency>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
+
+
+
+아요 👍
+지금 구조 (CatEndpoint) 보면, 메시지를 ChtaDTO로 감싸서 JSON으로 보내고 있었는데
+이걸 DTO 없이 Map으로 처리하려는 거죠?
+
+즉,
+
+{ "type": "chat", "message": "안녕하세요", "sender": "user1" }
+
+
+이런 식으로 동적으로 만들고 싶다는 뜻이에요 ✅
+
+그럼 아래 예시는 DTO 없이 Map 기반으로 동작하는 완성 예제입니다.
+주석까지 다 달아드릴게요 👇
+
+✅ 예제 코드 (Map 기반 WebSocket Endpoint)
+package com.kedu.endpoints;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
+import javax.websocket.EndpointConfig;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
+
+import com.google.gson.Gson;
+import com.kedu.config.SpringProvider;
+import com.kedu.config.WebSocketConfigurator;
+import com.kedu.services.ChatService;
+
+@ServerEndpoint(value = "/chat", configurator = WebSocketConfigurator.class)
+public class CatEndpoint {
+
+    // 🔹 HttpSession은 웹소켓의 연결 주체 (로그인 정보 등)과 연동용
+    private HttpSession hSession;
+
+    // 🔹 JSON 직렬화용
+    private static Gson gson = new Gson();
+
+    // 🔹 접속 중인 모든 클라이언트 세션을 저장
+    public static Set<Session> clients = Collections.synchronizedSet(new HashSet<>());
+
+    // 🔹 Spring Bean 직접 주입 (SpringProvider 이용)
+    private ChatService cServ = SpringProvider.ctx.getBean(ChatService.class);
+
+    // ======================== 연결 시 실행 ========================
+    @OnOpen
+    public void onConnection(Session session, EndpointConfig config) {
+        clients.add(session);
+        this.hSession = (HttpSession) config.getUserProperties().get("hSession");
+
+        String loginId = (String) this.hSession.getAttribute("loginID");
+        System.out.println("[WebSocket] 클라이언트 접속 : " + loginId + " / 세션 ID : " + session.getId());
+
+        // 🔹 접속 알림 메시지 Map
+        Map<String, Object> joinMsg = new HashMap<>();
+        joinMsg.put("type", "join");
+        joinMsg.put("user", loginId);
+        joinMsg.put("message", loginId + "님이 입장했습니다.");
+
+        broadcast(joinMsg);
+    }
+
+    // ======================== 메시지 수신 시 실행 ========================
+    @OnMessage
+    public void onMessage(String message, Session session) {
+        String loginId = (String) this.hSession.getAttribute("loginID");
+
+        System.out.println("[WebSocket] 메시지 수신 : " + message + " / 보낸 사람 : " + loginId);
+
+        // 🔹 DB 저장 (필요 시 서비스에서 처리)
+        cServ.isert(message);
+
+        // 🔹 Map으로 메시지 구조 구성
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("type", "chat");             // 메시지 유형
+        msg.put("user", loginId);            // 보낸 사람
+        msg.put("message", message);         // 실제 메시지
+        msg.put("timestamp", System.currentTimeMillis()); // 보낸 시각 (optional)
+
+        // 🔹 전체 브로드캐스트
+        broadcast(msg);
+    }
+
+    // ======================== 클라이언트 연결 종료 ========================
+    @OnClose
+    public void onClose(Session session) {
+        clients.remove(session);
+        String loginId = (String) this.hSession.getAttribute("loginID");
+
+        System.out.println("[WebSocket] 클라이언트 종료 : " + loginId + " / 세션 ID : " + session.getId());
+
+        // 🔹 퇴장 메시지
+        Map<String, Object> leaveMsg = new HashMap<>();
+        leaveMsg.put("type", "leave");
+        leaveMsg.put("user", loginId);
+        leaveMsg.put("message", loginId + "님이 퇴장했습니다.");
+
+        broadcast(leaveMsg);
+    }
+
+    // ======================== 에러 발생 시 실행 ========================
+    @OnError
+    public void onError(Session session, Throwable t) {
+        clients.remove(session);
+        System.err.println("[WebSocket] 에러 발생: " + t.getMessage());
+        t.printStackTrace();
+    }
+
+    // ======================== 공통 브로드캐스트 메서드 ========================
+    private void broadcast(Map<String, Object> messageMap) {
+        String jsonMessage = gson.toJson(messageMap);
+
+        synchronized (clients) {
+            for (Session client : clients) {
+                try {
+                    client.getBasicRemote().sendText(jsonMessage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
+
+🔍 요약 설명
