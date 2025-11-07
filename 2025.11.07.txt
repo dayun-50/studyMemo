@@ -1,0 +1,31 @@
+pwd > 현재 경로
+ls > 안에 뭐가있는지 보여주는거
+
+java -version > 자바버전확인
+
+apt search openjdk > 자바 깔기
+
+wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/adoptium.gpg > /dev/null 
+> 저 사이트를 신뢰하겟다 라는 명령어래
+
+echo "deb https://packages.adoptium.net/artifactory/deb $(awk -F= '/^VERSION_CODENAME/{print$2}' /etc/os-release) main" | sudo tee /etc/apt/sources.list.d/adoptium.list
+> 이것도 뭐 설정하는 명령언데 위에꺼랑 한번씩만 하면되서 외울필욘없데
+
+sudo > 관리자권한으로 실행
+
+sudo apt update > 관리자권한으로 저걸 업데이트
+
+sudo java -jar study01_borad-0.0.1-SNAPSHOT.jar > 서버 키는 명령어
+
+rm study01_borad-0.0.1-SNAPSHOT.jar > 프로젝트 제거
+
+
+nginx >웹서버 리눅스에서 인정하는 뭐시긴데
+정적인것만되서 동적인 서버 스프링 아예안돌아감
+하지만 리버스프록시 ? 용으로 쓸려고 사용한다 > 인증서버
+
+proxy 서버 > 
+
+
+
+sudo systemctl status nginx
