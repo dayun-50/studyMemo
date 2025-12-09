@@ -1,0 +1,29 @@
+* Public Cloud 배포
+
+1. 리액트 배포 - Firebase Https Hosting
+ - 정적 페이지 전용 호스팅 서버
+ - 관리형 인스턴스 ( 자체 인증서 처리 및 URL 발급 )
+
+2. SpringBoot 배포 - GCP Compute Engine ( ~= AWS EC2 )\
+ - 리눅스 서버를 호스팅 
+ - 수동 관리형 ( 보안 패치, 스케일링, 인증서 발급 등... )
+
+3. DNS 구매 및 연결 
+ - 스프링부트 서버는 클라이언트(고객)가 직접 접속하는 사이트 x
+ - 사용자는 리액트로 접속 -> 백엔드 서버와 리액트가 통신
+ - 구매한 도메인 원본은 백엔드 스프링이 아닌 리액트에 연결해야 맞음.
+   ex) a.com 이라면 리액트가 a.com 
+       백엔드는 api.a.com
+
+
+nohup java -Duser.timezone=Asia/Seoul -jar study01-0.0.1-SNAPSHOT.jar & > 쉘꺼도 계속 실행가능한 코드
+ps -ef | grep java > 켜져있는 서버 id확인
+kill 00000 > 해당 id로 서버종료
+kill -9 00000 > 해당 id로 서버 강제 종료
+tail -f nohup.out > 로고확인
+
+nohup java -Duser.timezone=Asia/Seoul \
+-Djames.admin.url=http://127.0.0.1:9000 \
+-jar CS_Project-0.0.1-SNAPSHOT.jar & > 이거 해야함...
+
+

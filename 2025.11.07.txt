@@ -15,9 +15,10 @@ sudo > 관리자권한으로 실행
 
 sudo apt update > 관리자권한으로 저걸 업데이트
 
-sudo java -jar study01_borad-0.0.1-SNAPSHOT.jar > 서버 키는 명령어
+sudo java -jar study01-0.0.1-SNAPSHOT.jar
+sudo java -Duser.timezone=Asia/Seoul -jar study01-0.0.1-SNAPSHOT.jar  > 서버 키는 명령어
 
-rm study01_borad-0.0.1-SNAPSHOT.jar > 프로젝트 제거
+rm study01-0.0.1-SNAPSHOT.jar > 프로젝트 제거
 
 
 nginx >웹서버 리눅스에서 인정하는 뭐시긴데

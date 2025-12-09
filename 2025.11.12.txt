@@ -1,0 +1,27 @@
+java -jar CS_Project-0.0.1-SNAPSHOT.jar
+
+ -Djames.admin.url=http://127.0.0.1:9000
+
+
+포트 추가 , 삭제, 리스트
+
+gcloud compute firewall-rules list
+
+gcloud compute firewall-rules delete RULE_NAME
+
+gcloud compute firewall-rules create allow-boot-9000 \
+    --action=ALLOW \
+    --direction=INGRESS \
+    --target-tags=james-server \
+    --source-ranges=34.22.88.78/32 \
+    --rules=tcp:9000 \
+    --priority=1000
+
+
+gcloud compute firewall-rules create allow-boot-80 \
+    --action=ALLOW \
+    --direction=INGRESS \
+    --target-tags=james-server \
+    --source-ranges=34.22.88.78/32 \
+    --rules=tcp:80 \
+    --priority=1000

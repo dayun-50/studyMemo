@@ -1,0 +1,51 @@
+* 3차 프로젝트의 배포 환경
+ 1 > Compute Engine 기반 배포
+ 	- 수동 관리형 인스턴스
+	 > 리버스 프록시 Nginx -> 인증서 발급
+	 > 보안 패치
+	 > 스케일링 (ex> E2-micro -> E2 -> standard)
+
+ 2 > CloudRun 기반 배포
+	- 완전 관리형 인스턴스
+	 > 리버스 프록시 서버 자동 구축
+	 > 인증서 발급도 자동 -> 자체 URL 발급
+	 > 보안 패치도 자동
+	 > 오토 스케일링
+
+* Docker ( 가상화 솔루션 )
+ - VMWare ( 컴퓨터 가상화 )
+	> 소프트웨어적으로 가상의 PC를 생성하여 Host PC 자원을 분배 받음
+	> 분배받은 자원을 독점하므로 성능을 많이 사용한다는 평가
+
+ - Docker ( 파일시스템 및 커널 가상화 )
+	> 소프트웨어적으로 가상의 실행환경만 생성
+	> HostPC의 자원을 공유하므로 상대적으로 가볍다는 평가
+
+
+클라우드 쉘 >
+docker build -t music:v1 . > 도커 이미지 빌드
+docker images > 현제 이미지 있는지 확인
+docker rmi ( 이미지아이디 ) > 도커이미지 삭제
+docker rmi -f ( 이미지아이디 ) > 도커이미지 강제 삭제
+
+sudo vim Dockerfile  > 도커 cmd로 여는법 사용법은 니가보면 알기다
+안에 내용은 아래
+   1 |     # tomcat + linux + jdk -> openJDK21 버전 
+   2 | >>> FROM openjdk:21-jre-slim
+   3 |     COPY music.jar app.jar
+   4 |     ENTRYPOINT ["java","-jar","app.jar"]
+
+clear > 쉘에 쌓여있는 명령기록 및 내용들 삭제하는 명령ㅇ어
+docker run -it -p 80:8080 ( 이미지아이디 ) > 이미지 실행시키는 명령어( 스프링생성됨 )
+>의미는 없는데 그냥 제대로 돌아가는지 확인하는거임
+
+cloud run > 서비스 만들기 > Artifact Registry > 프라이빗한 gcp에서 지원하는 뭐시깽이
+ docker build -t asia-northeast3-docker.pkg.dev/저장소이름(아티팩트레지스트리 이름 정할꺼 미리 적으면된데)/ 앱이름:태그명
+ex)docker build -t asia-northeast3-docker.pkg.dev/sustained-node-477501-ml/music/music:v1 .
+
+docker push (이름) > 아티펙트 레지스트리에 넣어두는거
+ex)docker push asia-northeast3-docker.pkg.dev/sustained-node-477501-ml/music/music:v1
+
+
+
+
